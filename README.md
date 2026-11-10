@@ -44,14 +44,23 @@ La lógica está organizada en las clases `CountdownTimer` (temporizador) y `Tim
 
 Las funcionalidades anteriores se han identificado leyendo el código; **no se ha probado la aplicación en ejecución**.
 
+## Organización por versiones
+
+- **`v1-2020/`**: código original de consola y subcarpeta **`build/`** con los archivos históricos de PyInstaller.
+- **`v2-2025/`**: código de la versión gráfica.
+- **`sirena.mp3`**: sonido compartido por las dos versiones, conservado en la raíz.
+- **`README.md`**: documentación general.
+
+Los archivos grandes `.exe` y `.pkg` permanecen en Releases. Los archivos de compilación se agrupan con la primera etapa porque el `.spec` referencia el antiguo `alarms.py`, no la versión gráfica de 2025; esto no permite demostrar qué código exacto se compiló.
+
 ## Estructura del repositorio
 
 | Archivo | Contenido |
 | --- | --- |
-| [`alarms_v1.py`](alarms_v1.py) | Temporizador original por consola |
-| [`alarms_v2.py`](alarms_v2.py) | Temporizador posterior con ventana |
+| [`alarms_v1.py`](v1-2020/alarms_v1.py) | Temporizador original por consola |
+| [`alarms_v2.py`](v2-2025/alarms_v2.py) | Temporizador posterior con ventana |
 | [`sirena.mp3`](sirena.mp3) | Sonido de alarma |
-| [`alarms.spec`](alarms.spec) | Configuración histórica de PyInstaller |
+| [`alarms.spec`](v1-2020/build/alarms.spec) | Configuración histórica de PyInstaller |
 | `Analysis-00.toc`, `EXE-00.toc`, `PKG-00.toc`, `PYZ-00.pyz`, `PYZ-00.toc`, `Tree-*.toc` | Archivos intermedios de compilación |
 | `base_library.zip`, `pyimod*.pyc`, `struct.pyc` | Componentes auxiliares generados |
 | `warn-alarms.txt`, `xref-alarms.html` | Informes de PyInstaller sobre importaciones y dependencias |
@@ -64,10 +73,10 @@ Se requiere Python con las bibliotecas `pygame` y `pyautogui`; para la versión 
 
 ```bash
 pip install pygame pyautogui
-python alarms_v1.py
+python v1-2020/alarms_v1.py
 ```
 
-Para la segunda versión, ejecutar `python alarms_v2.py` en lugar del comando anterior. El archivo `sirena.mp3` debe encontrarse en el directorio de trabajo desde el que se lanza el programa.
+Para la segunda versión, ejecutar `python v2-2025/alarms_v2.py` en lugar del comando anterior. El archivo `sirena.mp3` debe encontrarse en el directorio de trabajo desde el que se lanza el programa.
 
 El movimiento automático del ratón requiere acceso a un escritorio gráfico.
 
@@ -89,7 +98,7 @@ El objetivo es conservar el proyecto, no refactorizarlo. En la lectura del códi
 - En `alarms_v2.py`, el hilo de la cuenta atrás actualiza directamente elementos de Tkinter; esto podría ocasionar problemas, pues las actualizaciones de interfaz suelen requerir el hilo principal.
 - Los archivos de PyInstaller contienen rutas y dependencias del entorno original.
 
-No se han ejecutado pruebas, no se ha actualizado ninguna dependencia y **no se ha modificado ningún archivo original salvo este README**.
+No se han ejecutado pruebas ni actualizado dependencias. **Los archivos originales solo se han reubicado en carpetas; su contenido no se ha modificado.**
 
 ## Contexto
 
